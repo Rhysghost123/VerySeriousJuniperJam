@@ -1,0 +1,20 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "f:\\veryseriousjuniperjam\\veryseriousproject\\intermediate\\build\\win64\\unrealeditor\\inc\\veryseriousproject\\uht\\translateroomshud.gen.cpp",
+        "ProvidedModule": "",
+        "PCH": "f:\\veryseriousjuniperjam\\veryseriousproject\\intermediate\\build\\win64\\x64\\veryseriousprojecteditor\\development\\unrealed\\sharedpch.unrealed.project.valapi.cpp20.inclorderunreal5_3.h.pch",
+        "Includes": [
+            "f:\\veryseriousjuniperjam\\veryseriousproject\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\veryseriousproject\\definitions.veryseriousproject.h",
+            "f:\\veryseriousjuniperjam\\veryseriousproject\\source\\veryseriousproject\\public\\translateroomshud.h",
+            "f:\\serious jam\\ue_5.5\\engine\\source\\runtime\\engine\\classes\\gameframework\\hud.h",
+            "f:\\serious jam\\ue_5.5\\engine\\source\\runtime\\engine\\classes\\gameframework\\hudhitbox.h",
+            "f:\\serious jam\\ue_5.5\\engine\\source\\runtime\\engine\\classes\\gameframework\\debugtextinfo.h",
+            "f:\\serious jam\\ue_5.5\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\debugtextinfo.generated.h",
+            "f:\\serious jam\\ue_5.5\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\hud.generated.h",
+            "f:\\veryseriousjuniperjam\\veryseriousproject\\intermediate\\build\\win64\\unrealeditor\\inc\\veryseriousproject\\uht\\translateroomshud.generated.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

@@ -1,0 +1,16 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UnrealEditor-VerySeriousProject-0004.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"F:\VerySeriousJuniperJam\VerySeriousProject\Intermediate\Build\Win64\x64\VerySeriousProjectEditor\Development\UnrealEd\SharedPCH.UnrealEd.Project.ValApi.Cpp20.InclOrderUnreal5_3.h.obj"
+"F:\VerySeriousJuniperJam\VerySeriousProject\Intermediate\Build\Win64\x64\UnrealEditor\Development\VerySeriousProject\GenerateLevel.gen.cpp.obj"
+"F:\VerySeriousJuniperJam\VerySeriousProject\Intermediate\Build\Win64\x64\UnrealEditor\Development\VerySeriousProject\VerySeriousProject.init.gen.cpp.obj"
+"F:\VerySeriousJuniperJam\VerySeriousProject\Intermediate\Build\Win64\x64\UnrealEditor\Development\VerySeriousProject\GenerateLevel.cpp.obj"
+"F:\VerySeriousJuniperJam\VerySeriousProject\Intermediate\Build\Win64\x64\UnrealEditor\Development\VerySeriousProject\VerySeriousProject.cpp.obj"
+"F:\VerySeriousJuniperJam\VerySeriousProject\Intermediate\Build\Win64\x64\UnrealEditor\Development\VerySeriousProject\PerModuleInline.gen.cpp.obj"
+"F:\VerySeriousJuniperJam\VerySeriousProject\Intermediate\Build\Win64\x64\UnrealEditor\Development\VerySeriousProject\Default.rc2.res"
+/OUT:"F:\VerySeriousJuniperJam\VerySeriousProject\Intermediate\Build\Win64\x64\UnrealEditor\Development\VerySeriousProject\UnrealEditor-VerySeriousProject-0004.lib"

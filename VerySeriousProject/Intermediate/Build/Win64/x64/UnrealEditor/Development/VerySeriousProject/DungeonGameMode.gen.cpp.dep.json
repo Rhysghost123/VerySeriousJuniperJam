@@ -1,0 +1,19 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "f:\\veryseriousjuniperjam\\veryseriousproject\\intermediate\\build\\win64\\unrealeditor\\inc\\veryseriousproject\\uht\\dungeongamemode.gen.cpp",
+        "ProvidedModule": "",
+        "PCH": "f:\\veryseriousjuniperjam\\veryseriousproject\\intermediate\\build\\win64\\x64\\veryseriousprojecteditor\\development\\unrealed\\sharedpch.unrealed.project.valapi.cpp20.inclorderunreal5_3.h.pch",
+        "Includes": [
+            "f:\\veryseriousjuniperjam\\veryseriousproject\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\veryseriousproject\\definitions.veryseriousproject.h",
+            "f:\\veryseriousjuniperjam\\veryseriousproject\\source\\veryseriousproject\\public\\dungeongamemode.h",
+            "f:\\serious jam\\ue_5.5\\engine\\source\\runtime\\engine\\classes\\gameframework\\gamemodebase.h",
+            "f:\\serious jam\\ue_5.5\\engine\\source\\runtime\\engine\\classes\\engine\\serverstatreplicator.h",
+            "f:\\serious jam\\ue_5.5\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\serverstatreplicator.generated.h",
+            "f:\\serious jam\\ue_5.5\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\gamemodebase.generated.h",
+            "f:\\veryseriousjuniperjam\\veryseriousproject\\intermediate\\build\\win64\\unrealeditor\\inc\\veryseriousproject\\uht\\dungeongamemode.generated.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}
