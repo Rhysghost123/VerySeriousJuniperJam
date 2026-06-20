@@ -16,12 +16,10 @@ class VERYSERIOUSPROJECT_API AAwfulPlayerController : public APlayerController
 	GENERATED_BODY()
 
 protected:
-	float Health = 100;
+	int Health = 100;
 	
 public:
-	enum HealthChangeFlag {
-		ADD,
-		SUB
-	};
+	enum HealthChangeFlag { ADD, SUB };
+
 	void ChangeHealth(HealthChangeFlag Flag, int Value);
 };

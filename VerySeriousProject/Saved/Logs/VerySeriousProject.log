@@ -2955,3 +2955,23 @@ Would you like to open the Output Log to see more details?
 [2026.06.20-18.48.06:628][763]LogShaderCompilers: Display: Material DDC Serialization Only: 0.00 s (1%)
 [2026.06.20-18.48.06:628][763]LogShaderCompilers: Display: Material Cache Hits: 16 (7%)
 [2026.06.20-18.48.06:628][763]LogShaderCompilers: Display: ================================================
+[2026.06.20-19.08.56:141][547]Cmd: TRANSACTION UNDO
+[2026.06.20-19.08.56:141][547]LogEditorTransaction: Undo Clicking on Elements
+[2026.06.20-19.08.56:939][580]Cmd: TRANSACTION UNDO
+[2026.06.20-19.08.56:939][580]LogEditorTransaction: Undo Clicking on Elements
+[2026.06.20-19.08.57:287][603]Cmd: TRANSACTION UNDO
+[2026.06.20-19.08.57:287][603]LogEditorTransaction: Undo Rotate Elements
+[2026.06.20-19.08.57:623][634]Cmd: TRANSACTION UNDO
+[2026.06.20-19.08.57:623][634]LogEditorTransaction: Undo Rotate Elements
+[2026.06.20-19.08.57:932][664]Cmd: TRANSACTION UNDO
+[2026.06.20-19.08.57:933][664]LogEditorTransaction: Undo Rotate Elements
+[2026.06.20-19.08.58:349][705]Cmd: TRANSACTION UNDO
+[2026.06.20-19.08.58:349][705]LogEditorTransaction: Undo Clicking on Elements
+[2026.06.20-19.17.26:787][706]LogUObjectHash: Compacting FUObjectHashTables data took   0.49ms
+[2026.06.20-19.17.26:789][706]LogFileHelpers: Editor autosave (incl. external actors) for '/Game/idk' took 0.032
+[2026.06.20-19.36.36:716][479]LogDerivedDataCache: C:/Users/acer/AppData/Local/UnrealEngine/Common/DerivedDataCache: Maintenance finished in +00:00:00.000 and deleted 0 files with total size 0 MiB and 0 empty folders. Scanned 0 files in 1 folders with total size 0 MiB.
+[2026.06.20-20.18.42:778][133]LogUObjectHash: Compacting FUObjectHashTables data took   0.53ms
+[2026.06.20-20.18.42:788][133]LogSavePackage: Moving output files for package: /Temp/Autosaves/Game/__ExternalActors__/idk/B/WD/9RGQ8BY3HYV9HZ6IZ4Y50P_Auto2
+[2026.06.20-20.18.42:788][133]LogSavePackage: Moving '../../../../../VerySeriousJuniperJam/VerySeriousProject/Saved/9RGQ8BY3HYV9HZ6IZ4Y50P_Auto23B3DA8784DB9BAD9F7A34C8890C5F0E9.tmp' to '../../../../../VerySeriousJuniperJam/VerySeriousProject/Saved/Autosaves/Game/__ExternalActors__/idk/B/WD/9RGQ8BY3HYV9HZ6IZ4Y50P_Auto2.uasset'
+[2026.06.20-20.18.42:789][133]LogFileHelpers: Editor autosave (incl. external actors) for '/Game/idk' took 0.028
+[2026.06.20-20.18.42:791][133]LogFileHelpers: Editor autosave (incl. sublevels & external actors) for all levels took 0.028

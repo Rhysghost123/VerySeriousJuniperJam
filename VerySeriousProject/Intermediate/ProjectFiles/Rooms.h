@@ -1,6 +1,7 @@
 #pragma once
 #pragma once
 
+UENUM()
 enum class AvailableRoomTranslationDirections {
 	NORTH = 0,
 	EAST = 1 << 1,
@@ -23,8 +24,10 @@ enum RoomType {
 	CONSOLE
 };
 
-struct Room
+USTRUCT()
+struct FRoom
 {
+	GENERATED_BODY()
 public:
 	char* ID;
 	bool CanMove;

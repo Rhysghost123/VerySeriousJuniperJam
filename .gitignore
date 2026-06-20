@@ -45,6 +45,8 @@
 *.pdb
 *.exp
 *.rsp 
+*.old
+
 # Precompiled Assets
 SourceArt/**/*.png
 SourceArt/**/*.tga
