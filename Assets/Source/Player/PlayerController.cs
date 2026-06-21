@@ -1,37 +1,22 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(CharacterController))]
+[RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
 {
-    public enum RotationBehavior
-    {
-        FaceMovementDirection,
-        FaceMouseCursor
-    }
-
-    [Header("Movement Settings")]
     [SerializeField] private float moveSpeed = 7f;
     [SerializeField] private float rotationSpeed = 15f;
-    [SerializeField] private RotationBehavior rotationType = RotationBehavior.FaceMovementDirection;
-
-    [Header("Ground & Gravity Settings")]
-    [SerializeField] private LayerMask groundLayer;
-    [SerializeField] private float gravity = -9.81f;
 
     [Header("Input")]
     [SerializeField] private InputActionReference moveAction;
 
-    private CharacterController characterController;
-    private Camera mainCamera;
+    private Rigidbody2D rb;
+    private Vector2 movementInput;
 
-    private Vector3 movementInput;
-    private Vector3 velocity;
-
-    private void Start()
+    private void Awake()
     {
-        characterController = GetComponent<CharacterController>();
-        mainCamera = Camera.main;
+        rb = GetComponent<Rigidbody2D>();
+        rb.gravityScale = 0;
     }
 
     private void OnEnable()
@@ -46,59 +31,24 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        GatherInput();
-        ProcessMovement();
-        ProcessRotation();
-    }
+        movementInput = moveAction.action.ReadValue<Vector2>();
 
-    private void GatherInput()
-    {
-        Vector2 input = moveAction.action.ReadValue<Vector2>();
+        Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        mouseWorld.z = 0f;
 
-        movementInput = new Vector3(
-            input.x,
-            input.y,
-            0f
-        );
+        Vector2 lookDir = mouseWorld - transform.position;
 
-        if (movementInput.sqrMagnitude > 1f)
-            movementInput.Normalize();
-    }
-
-
-    private void ProcessMovement()
-    {
-        characterController.Move(
-            movementInput * moveSpeed * Time.deltaTime
-        );
-    }
-
-    private void ProcessRotation()
-    {
-        Vector2 mousePos = Mouse.current.position.ReadValue();
-
-        Ray ray = mainCamera.ScreenPointToRay(mousePos);
-
-        Plane groundPlane = new Plane(Vector3.up, transform.position);
-
-        if (groundPlane.Raycast(ray, out float distance))
+        if (lookDir.sqrMagnitude > 0.001f)
         {
-            Vector3 hitPoint = ray.GetPoint(distance);
-
-            Vector3 lookDir = hitPoint - transform.position;
-            lookDir.y = 0f;
-
-            if (lookDir.sqrMagnitude > 0.001f)
-            {
-                Quaternion targetRotation =
-                    Quaternion.LookRotation(lookDir);
-
-                transform.rotation = Quaternion.Slerp(
-                    transform.rotation,
-                    targetRotation,
-                    rotationSpeed * Time.deltaTime
-                );
-            }
+            float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg;
+            Quaternion targetRotation = Quaternion.Euler(0f, 0f, angle);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
+    }
+
+    private void FixedUpdate()
+    {
+        rb.linearVelocity =
+            movementInput.normalized * moveSpeed;
     }
 }
