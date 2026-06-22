@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public enum BuffType
@@ -11,7 +12,7 @@ public enum BuffableStats
     Speed,
     Strength,
     Health,
-    LuckMultiplier,
+    GoodLuckMultiplier,
     ADDMORESTUFF
 }
 
@@ -25,8 +26,8 @@ public class BuffData : ScriptableObject
     public BuffType type;
     public BuffableStats stat;
 
-    public float durationSeconds = 60;
+    public int durationSeconds = 60; // well no half seconds :(
 
     [Header("Visuals")]
-    public Sprite displayIcon; // Show a display Icon when the player recieves a debuff or buff
+    public Sprite? displayIcon; // Show a display Icon when the player recieves a debuff or buff
 }
