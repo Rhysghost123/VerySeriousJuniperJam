@@ -10,6 +10,17 @@ public class PlayerController : MonoBehaviour
     [Header("Input")]
     [SerializeField] private InputActionReference moveAction;
 
+
+
+    [Header("GAMBLING")]
+    [SerializeField] private float GoodLuckMultiplier = 1.0f;
+
+    [Header("Health")]
+    [SerializeField] private int MaxHealth = 100;
+    [SerializeField] private float RegenSpeed = 5.0f; // per second
+
+
+
     private Rigidbody2D rb;
     private Vector2 movementInput;
     private float targetAngle;
@@ -22,6 +33,31 @@ public class PlayerController : MonoBehaviour
     public float GetMoveSpeed()
     {
         return moveSpeed;
+    }
+    public void SetGoodLuckMultiplier(float mul)
+    {
+        GoodLuckMultiplier = mul;
+    }
+    public float GetGoodLuckMultiplier()
+    {
+        return GoodLuckMultiplier;
+    }
+
+    public void SetMaxHealth(int val)
+    {
+        MaxHealth = val;
+    }
+    public int GetMaxHealth()
+    {
+        return MaxHealth;
+    }
+    public void SetRegenSpeed(float val)
+    {
+        RegenSpeed = val;
+    }
+    public float GetRegenSpeed()
+    {
+        return RegenSpeed;
     }
 
     private void Awake()

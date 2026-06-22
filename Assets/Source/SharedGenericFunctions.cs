@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using System.Security.Cryptography;
+using System.Collections;
 using System.Runtime.CompilerServices;
 
 class GenericUtils
@@ -50,5 +51,26 @@ class PlayerUtils
     public static PlayerController GetPlayerController()
     {
         return UnityEngine.Object.FindAnyObjectByType<PlayerController>();
+    }
+}
+
+class TimeUtils
+{
+    public static IEnumerator StartCountdown(int totalSeconds, Action finished)
+    {
+        int timeRemaining = totalSeconds;
+
+        while (timeRemaining > 0)
+        {
+            Debug.Log($"Time remaining: {timeRemaining}");
+
+            yield return new WaitForSeconds(1f);
+
+            timeRemaining--;
+        }
+
+        Debug.Log("Countdown finished");
+
+        finished?.Invoke();
     }
 }
