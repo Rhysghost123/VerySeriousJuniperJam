@@ -10,8 +10,6 @@ public class PlayerController : MonoBehaviour
     [Header("Input")]
     [SerializeField] private InputActionReference moveAction;
 
-
-
     [Header("GAMBLING")]
     [SerializeField] private float GoodLuckMultiplier = 1.0f;
 
@@ -19,12 +17,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private int MaxHealth = 100;
     [SerializeField] private float RegenSpeed = 5.0f; // per second
 
-
-
     private Rigidbody2D rb;
     private Vector2 movementInput;
     private float targetAngle;
     private bool hasValidLookDir;
+
+    private bool mouseLookEnabled { get; set; } = true;
 
     public void SetMoveSpeed(float speed)
     {
@@ -80,7 +78,7 @@ public class PlayerController : MonoBehaviour
         Vector2 lookDir = mouseWorld - transform.position;
 
         // Use a real-world distance threshold, not a tiny sqrMagnitude epsilon
-        if (lookDir.sqrMagnitude > minLookDistance * minLookDistance)
+        if (mouseLookEnabled == true && lookDir.sqrMagnitude > minLookDistance * minLookDistance)
         {
             targetAngle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg;
             hasValidLookDir = true;

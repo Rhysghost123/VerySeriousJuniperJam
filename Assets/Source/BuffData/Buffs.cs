@@ -1,56 +1,123 @@
 using UnityEngine;
+using System.Collections.Generic;
 using System;
 
-public class Buffs
+public static class BuffManager
 {
-    public static void ApplyRandomBuff()
+    private static readonly Dictionary<BuffableStats, StatLayer> _layers = new();
+
+    private static readonly StatLayer _regenLayer = new();
+
+    public static void Apply(BuffData chosen, bool isDebuff)
     {
-        var BuffCount = BuffDatabaseRuntime.Instance.GetBuffsCount();
-        var randomNum = Random.RandomMinMax<int>(0, BuffCount); // :(
+        var pc = PlayerUtils.GetPlayerController();
+        float mul = isDebuff ? 2f : 0.5f;   // TODO: drive from chosen.baseValue for per-asset potency
 
-        BuffData[] Available = BuffDatabaseRuntime.Instance.GetAllBuffs();
+        StatLayer layer = GetOrCreate(chosen.stat, pc);
+        var entry = new BuffEntry(mul);
+        layer.active.Add(entry);
 
-        // index into the array to chose one, wrap around modulo with the count.
-        BuffData chosen = Available[randomNum % BuffCount];
-
-
-        var PC = PlayerUtils.GetPlayerController();
-        if (chosen.stat == BuffableStats.Speed)
+        // Health buffs also scale regen speed.
+        BuffEntry regenEntry = null;
+        if (chosen.stat == BuffableStats.Health)
         {
-            var ResetValueA = PC.GetMoveSpeed();
-            PC.SetMoveSpeed(ResetValueA / 2); // half it
-            TimeUtils.StartCountdown(
-                chosen.durationSeconds,
-                () => PC.SetMoveSpeed(ResetValueA)
-            );
+            EnsureRegenBase(pc);
+            regenEntry = new BuffEntry(mul);
+            _regenLayer.active.Add(regenEntry);
         }
-        else if (chosen.stat == BuffableStats.Health)
+
+        Recalculate(chosen.stat, pc);
+
+        TimeUtils.StartCountdown(chosen.durationSeconds, () =>
         {
-            var ResetValueA = PC.GetMaxHealth();
-            var ResetValueB = PC.GetRegenSpeed();
+            layer.active.Remove(entry);
+            regenEntry?.Let(e => _regenLayer.active.Remove(e));
+            Recalculate(chosen.stat, pc);
+        });
+    }
 
-            PC.SetMaxHealth(ResetValueA / 2);
-            PC.SetRegenSpeed(ResetValueB / 2);
+    private class BuffEntry { public float multiplier; public BuffEntry(float m) => multiplier = m; }
 
-            TimeUtils.StartCountdown(
-                chosen.durationSeconds,
-                () =>
-                {
-                    PC.SetMaxHealth(ResetValueA);
-                    PC.SetRegenSpeed(ResetValueB);
-                }
-            );
-        }
-        else if (chosen.stat == BuffableStats.GoodLuckMultiplier)
+    private class StatLayer
+    {
+        public float baseValue;
+        public bool baseCaptured;
+        public readonly List<BuffEntry> active = new();
+
+        public float Combined()
         {
-            var ResetValueA = PC.GetGoodLuckMultiplier();
-            PC.SetGoodLuckMultiplier(ResetValueA / 2); // pain
-
-            TimeUtils.StartCountdown(
-                chosen.durationSeconds,
-                () => PC.SetGoodLuckMultiplier(ResetValueA)
-            );
+            float r = 1f;
+            foreach (var e in active) r *= e.multiplier;
+            return r;
         }
-        // keep adding elifs
+    }
+
+    private static StatLayer GetOrCreate(BuffableStats stat, PlayerController pc)
+    {
+        if (!_layers.TryGetValue(stat, out var layer))
+        {
+            layer = new StatLayer { baseValue = ReadBase(stat, pc), baseCaptured = true };
+            _layers[stat] = layer;
+        }
+        return layer;
+    }
+
+    private static float ReadBase(BuffableStats stat, PlayerController pc) => stat switch
+    {
+        BuffableStats.Speed => pc.GetMoveSpeed(),
+        BuffableStats.Health => pc.GetMaxHealth(),
+        BuffableStats.GoodLuckMultiplier => pc.GetGoodLuckMultiplier(),
+        _ => 0f
+    };
+
+    private static void EnsureRegenBase(PlayerController pc)
+    {
+        if (!_regenLayer.baseCaptured)
+        {
+            _regenLayer.baseValue = pc.GetRegenSpeed();
+            _regenLayer.baseCaptured = true;
+        }
+    }
+
+    private static void Recalculate(BuffableStats stat, PlayerController pc)
+    {
+        var layer = _layers[stat];
+        switch (stat)
+        {
+            case BuffableStats.Speed:
+                pc.SetMoveSpeed(layer.baseValue * layer.Combined());
+                break;
+
+            case BuffableStats.Health:
+                pc.SetMaxHealth((int)Mathf.Round(layer.baseValue * layer.Combined()));
+                pc.SetRegenSpeed(_regenLayer.baseValue * _regenLayer.Combined());
+                break;
+
+            case BuffableStats.GoodLuckMultiplier:
+                pc.SetGoodLuckMultiplier(layer.baseValue * layer.Combined());
+                break;
+        }
+    }
+}
+internal static class ObjectExt
+{
+    public static void Let<T>(this T obj, System.Action<T> action) where T : class
+    {
+        if (obj != null) action(obj);
+    }
+}
+public static class Buffs
+{
+    public static void ApplyRandomBuff() => ApplyRandom(isDebuff: false);
+    public static void ApplyRandomDebuff() => ApplyRandom(isDebuff: true);
+
+    private static void ApplyRandom(bool isDebuff)
+    {
+        var db = BuffDatabaseRuntime.Instance;
+        var available = isDebuff ? db.GetAllDebuffs() : db.GetAllBuffs();
+        if (available.Length == 0) return;
+
+        var chosen = available[UnityEngine.Random.Range(0, available.Length)];
+        BuffManager.Apply(chosen, isDebuff);
     }
 }
