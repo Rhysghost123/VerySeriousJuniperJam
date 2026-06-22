@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public enum BuffType
@@ -28,5 +29,5 @@ public class BuffData : ScriptableObject
     public float durationSeconds = 60;
 
     [Header("Visuals")]
-    public Sprite displayIcon; // Show a display Icon when the player recieves a debuff or buff
+    public Sprite? displayIcon; // Show a display Icon when the player recieves a debuff or buff
 }

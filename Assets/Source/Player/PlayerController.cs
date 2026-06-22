@@ -15,6 +15,15 @@ public class PlayerController : MonoBehaviour
     private float targetAngle;
     private bool hasValidLookDir;
 
+    public void SetMoveSpeed(float speed)
+    {
+        moveSpeed = speed;
+    }
+    public float GetMoveSpeed()
+    {
+        return moveSpeed;
+    }
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
