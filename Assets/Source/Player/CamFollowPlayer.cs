@@ -4,6 +4,8 @@ public class CamFollowPlayer : MonoBehaviour
 {
     public GameObject Player;
     public GameObject Camera;
+    public GameObject DirectionArrowsParent;
+
     void Start()
     {
 
@@ -17,5 +19,6 @@ public class CamFollowPlayer : MonoBehaviour
         CameraPos.z -= 10;
 
         Camera.transform.position = CameraPos;
+        DirectionArrowsParent.transform.position = PlayerUtils.GetPlayerController().GetTransform().position;
     }
 }

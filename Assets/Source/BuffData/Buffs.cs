@@ -1,23 +1,21 @@
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 using System;
 
 public static class BuffManager
 {
     private static readonly Dictionary<BuffableStats, StatLayer> _layers = new();
-
     private static readonly StatLayer _regenLayer = new();
 
     public static void Apply(BuffData chosen, bool isDebuff)
     {
         var pc = PlayerUtils.GetPlayerController();
-        float mul = isDebuff ? 2f : 0.5f;   // TODO: drive from chosen.baseValue for per-asset potency
+        float mul = isDebuff ? 2f : 0.5f;
 
         StatLayer layer = GetOrCreate(chosen.stat, pc);
         var entry = new BuffEntry(mul);
         layer.active.Add(entry);
 
-        // Health buffs also scale regen speed.
         BuffEntry regenEntry = null;
         if (chosen.stat == BuffableStats.Health)
         {
@@ -35,6 +33,71 @@ public static class BuffManager
             Recalculate(chosen.stat, pc);
         });
     }
+
+    // Keyed per-enemy so buffs expire independently per instance
+    private static readonly Dictionary<(EnemyController, BuffableStats), StatLayer> _enemyLayers = new();
+
+    public static void ApplyToEnemies(BuffData chosen)
+    {
+        foreach (var enemy in Enemies.GetEnemyControllers())
+            ApplyToEnemy(chosen, enemy);
+    }
+
+    private static void ApplyToEnemy(BuffData chosen, EnemyController enemy)
+    {
+        const float enemyBuffMul = 2f; // buff = enemy gets stronger (opposite of player buff)
+
+        var key = (enemy, chosen.stat);
+        if (!_enemyLayers.TryGetValue(key, out var layer))
+        {
+            layer = new StatLayer { baseValue = ReadEnemyBase(chosen.stat, enemy), baseCaptured = true };
+            _enemyLayers[key] = layer;
+        }
+
+        var entry = new BuffEntry(enemyBuffMul);
+        layer.active.Add(entry);
+        RecalculateEnemy(chosen.stat, enemy, layer);
+
+        TimeUtils.StartCountdown(chosen.durationSeconds, () =>
+        {
+            layer.active.Remove(entry);
+            if (enemy == null) { _enemyLayers.Remove(key); return; }
+            RecalculateEnemy(chosen.stat, enemy, layer);
+        });
+    }
+
+    private static float ReadEnemyBase(BuffableStats stat, EnemyController enemy) => stat switch
+    {
+        BuffableStats.Health => enemy.GetMaxHealth(),
+        BuffableStats.Strength => enemy.GetStrength(),
+        _ => 0f
+    };
+
+    private static void RecalculateEnemy(BuffableStats stat, EnemyController enemy, StatLayer layer)
+    {
+        if (enemy == null) return;
+
+        var health = enemy.GetComponent<Health>();
+        if (health == null) return;
+
+        switch (stat)
+        {
+            case BuffableStats.Health:
+                health.SetMaxHealth(layer.baseValue * layer.Combined());
+                break;
+            case BuffableStats.Strength:
+                enemy.SetStrength(layer.baseValue * layer.Combined());
+                break;
+        }
+    }
+
+
+
+
+
+
+
+
 
     private class BuffEntry { public float multiplier; public BuffEntry(float m) => multiplier = m; }
 
@@ -87,37 +150,21 @@ public static class BuffManager
             case BuffableStats.Speed:
                 pc.SetMoveSpeed(layer.baseValue * layer.Combined());
                 break;
-
             case BuffableStats.Health:
                 pc.SetMaxHealth((int)Mathf.Round(layer.baseValue * layer.Combined()));
                 pc.SetRegenSpeed(_regenLayer.baseValue * _regenLayer.Combined());
                 break;
-
             case BuffableStats.GoodLuckMultiplier:
                 pc.SetGoodLuckMultiplier(layer.baseValue * layer.Combined());
                 break;
         }
     }
 }
+
 internal static class ObjectExt
 {
-    public static void Let<T>(this T obj, System.Action<T> action) where T : class
+    public static void Let<T>(this T obj, Action<T> action) where T : class
     {
         if (obj != null) action(obj);
-    }
-}
-public static class Buffs
-{
-    public static void ApplyRandomBuff() => ApplyRandom(isDebuff: false);
-    public static void ApplyRandomDebuff() => ApplyRandom(isDebuff: true);
-
-    private static void ApplyRandom(bool isDebuff)
-    {
-        var db = BuffDatabaseRuntime.Instance;
-        var available = isDebuff ? db.GetAllDebuffs() : db.GetAllBuffs();
-        if (available.Length == 0) return;
-
-        var chosen = available[UnityEngine.Random.Range(0, available.Length)];
-        BuffManager.Apply(chosen, isDebuff);
     }
 }

@@ -22,7 +22,7 @@ public class BuffData : ScriptableObject
 {
     [Header("Configuration")]
     public string assetName;
-    public int baseValue;
+    public int Modifier;
     public BuffType type;
     public BuffableStats stat;
 

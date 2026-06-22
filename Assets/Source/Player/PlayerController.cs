@@ -1,79 +1,41 @@
-using Unity.Burst.Intrinsics;
 using UnityEngine;
 using UnityEngine.InputSystem;
+
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Health))]
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 7f;
     [SerializeField] private float rotationSpeed = 15f;
-    [SerializeField] private float minLookDistance = 0.1f; // ignore cursor too close to player
+    [SerializeField] private float minLookDistance = 0.1f;
 
     [Header("Input")]
     [SerializeField] private InputActionReference moveAction;
 
-    [Header("GAMBLING")]
+    [Header("Gambling")]
     [SerializeField] private float GoodLuckMultiplier = 1.0f;
 
-    [Header("Health")]
-    [SerializeField] private int MaxHealth = 100;
-    [SerializeField] private float RegenSpeed = 5.0f; // per second
 
     private Rigidbody2D rb;
+    private Health health;
     private Vector2 movementInput;
     private float targetAngle;
     private bool hasValidLookDir;
-
-    private bool mouseLookEnabled { get; set; } = true;
-
-    public InputActionReference GetInputActionReference()
-    {
-        return moveAction;
-    }
-
-    public Rigidbody2D GetRigidbody()
-    {
-        return rb;
-    }
-
-    public void SetMoveSpeed(float speed)
-    {
-        moveSpeed = speed;
-    }
-    public float GetMoveSpeed()
-    {
-        return moveSpeed;
-    }
-    public void SetGoodLuckMultiplier(float mul)
-    {
-        GoodLuckMultiplier = mul;
-    }
-    public float GetGoodLuckMultiplier()
-    {
-        return GoodLuckMultiplier;
-    }
-
-    public void SetMaxHealth(int val)
-    {
-        MaxHealth = val;
-    }
-    public int GetMaxHealth()
-    {
-        return MaxHealth;
-    }
-    public void SetRegenSpeed(float val)
-    {
-        RegenSpeed = val;
-    }
-    public float GetRegenSpeed()
-    {
-        return RegenSpeed;
-    }
+    private bool mouseLookEnabled = true;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        health = GetComponent<Health>();
+
         rb.gravityScale = 0;
-        rb.freezeRotation = true; // <-- key fix: physics must never rotate this body
+        rb.freezeRotation = true;
+
+        health.Died += OnDied;
+        health.Damaged += OnDamaged;
+        health.Healed += OnHealed;
+
+        ControllerRegistry.Register(this);
     }
 
     private void OnEnable() => moveAction.action.Enable();
@@ -88,13 +50,11 @@ public class PlayerController : MonoBehaviour
 
         Vector2 lookDir = mouseWorld - transform.position;
 
-        // Use a real-world distance threshold, not a tiny sqrMagnitude epsilon
-        if (mouseLookEnabled == true && lookDir.sqrMagnitude > minLookDistance * minLookDistance)
+        if (mouseLookEnabled && lookDir.sqrMagnitude > minLookDistance * minLookDistance)
         {
             targetAngle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg;
             hasValidLookDir = true;
         }
-        // else: keep last valid targetAngle, don't rotate toward noise
     }
 
     private void FixedUpdate()
@@ -107,4 +67,40 @@ public class PlayerController : MonoBehaviour
             rb.MoveRotation(newAngle);
         }
     }
+    private void OnDied()
+    {
+        mouseLookEnabled = false;
+        movementInput = Vector2.zero;
+        rb.linearVelocity = Vector2.zero;
+        Debug.Log("Player died");
+        // disable input, trigger death anim, load game over screen, etc.
+    }
+
+    private void OnDamaged(float amount, float current)
+    {
+        Debug.Log($"Player took {amount} damage, {current} HP remaining");
+        //  update HP bar
+    }
+
+    private void OnHealed(float amount, float current)
+    {
+        Debug.Log($"Player healed {amount}, now at {current} HP");
+        // update HP bar
+    }
+
+    public Transform GetTransform() => transform;
+    public InputActionReference GetInputActionReference() => moveAction;
+    public Rigidbody2D GetRigidbody() => rb;
+
+    public float GetMoveSpeed() => moveSpeed;
+    public void SetMoveSpeed(float v) => moveSpeed = v;
+
+    public float GetGoodLuckMultiplier() => GoodLuckMultiplier;
+    public void SetGoodLuckMultiplier(float v) => GoodLuckMultiplier = v;
+
+
+    public float GetMaxHealth() => health.GetMaxHealth();
+    public void SetMaxHealth(int v) => health.SetMaxHealth(v);
+    public float GetRegenSpeed() => health.GetRegenSpeed();
+    public void SetRegenSpeed(float v) => health.SetRegenSpeed(v);
 }

@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71fc14d21c1f6e7408ae4ccb4bb3b3f6, type: 3}
+  m_Script: {fileID: 11500000, guid: c02febf821b5d974ab414024364d9525, type: 3}
   m_Name: SpeedBuff
   m_EditorClassIdentifier: Assembly-CSharp::BuffData
   assetName: Speed Buff
-  baseValue: 0
+  Modifier: 2
   type: 0
   stat: 0
   durationSeconds: 60
