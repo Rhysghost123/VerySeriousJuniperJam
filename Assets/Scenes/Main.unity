@@ -205,13 +205,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 911154990}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.05, y: 2.2199998, z: 0.03}
+  m_LocalRotation: {x: -0, y: -0, z: 1, w: 0}
+  m_LocalPosition: {x: 4.1600003, y: -1.03, z: 0.03}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 1796727077}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
 --- !u!114 &911154993
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -226,6 +226,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SwordBehavior
   meleeWeapon: {fileID: 11400000, guid: 30ad33a70b420764b80aa7281a70e448, type: 2}
   player: {fileID: 1796727073}
+  reference: {fileID: 5699891486940395155, guid: 93fce591322299f42bcc3f7c1a167d3e, type: 3}
   orbitSpeed: 2
   orbitRadius: 2
 --- !u!61 &911154994
@@ -244,7 +245,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -682,12 +683,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   moveSpeed: 7
   rotationSpeed: 15
-  rotationType: 0
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  gravity: -9.81
+  minLookDistance: 0.1
   moveAction: {fileID: -1680190386980627800, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  GoodLuckMultiplier: 1
+  MaxHealth: 100
+  RegenSpeed: 5
 --- !u!212 &1796727076
 SpriteRenderer:
   serializedVersion: 2
@@ -760,7 +760,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 911154992}
+  - {fileID: 2029176100}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &1796727078
@@ -828,7 +828,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 1.6, y: 1.6}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -1004,9 +1004,9 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingLayerID: -994282245
+  m_SortingLayer: 3
+  m_SortingOrder: 736
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
   m_Color: {r: 1, g: 0, b: 0, a: 1}
@@ -1025,5 +1025,6 @@ SceneRoots:
   - {fileID: 1704166486}
   - {fileID: 1864942870}
   - {fileID: 1427495574}
+  - {fileID: 911154992}
   - {fileID: 1796727077}
   - {fileID: 1538871434}

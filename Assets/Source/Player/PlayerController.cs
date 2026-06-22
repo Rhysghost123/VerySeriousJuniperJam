@@ -1,3 +1,4 @@
+using Unity.Burst.Intrinsics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 [RequireComponent(typeof(Rigidbody2D))]
@@ -23,6 +24,16 @@ public class PlayerController : MonoBehaviour
     private bool hasValidLookDir;
 
     private bool mouseLookEnabled { get; set; } = true;
+
+    public InputActionReference GetInputActionReference()
+    {
+        return moveAction;
+    }
+
+    public Rigidbody2D GetRigidbody()
+    {
+        return rb;
+    }
 
     public void SetMoveSpeed(float speed)
     {
