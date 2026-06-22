@@ -1,5 +1,6 @@
 ﻿<Solution>
   <Project Path="Assembly-CSharp.csproj" />
+<<<<<<< HEAD
 </Solution>
 ﻿<Solution>
   <Project Path="Unity.Timeline.csproj" />
@@ -84,4 +85,6 @@
   <Project Path="Unity.RenderPipelines.Universal.Config.Runtime.csproj" />
   <Project Path="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.csproj" />
   <Project Path="Unity.RenderPipelines.Core.ShaderLibrary.csproj" />
+=======
+>>>>>>> parent of 760c38a (Merge branch 'main' of https://github.com/Rhysghost123/VerySeriousJuniperJam)
 </Solution>

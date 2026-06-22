@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: fc0288370bde6714b8c19830fe2434ea
+guid: 72678343419ff624a9c4ac0b6a50ae36
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2991647863453476748
-    second: shield_bar_0
+      213: 6073649362014858996
+    second: potion(optional)_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,9 +46,9 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 0
+  spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
@@ -72,7 +72,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 32
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -100,12 +100,12 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: shield_bar_0
+      name: potion(optional)_0
       rect:
         serializedVersion: 2
-        x: 2
-        y: 2
-        width: 27
+        x: 6
+        y: 1
+        width: 18
         height: 27
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c876332a1e7748920800000000000000
-      internalID: 2991647863453476748
+      spriteID: 4fe6c294aefe94450800000000000000
+      internalID: 6073649362014858996
       vertices: []
       indices: 
       edges: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      shield_bar_0: 2991647863453476748
+      potion(optional)_0: 6073649362014858996
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
