@@ -6,43 +6,57 @@ using UnityEngine.InputSystem;
 public class SwordBehavior : MonoBehaviour
 {
     public MeleeWeapon meleeWeapon;
-    public GameObject player;
+    public GameObject playerSprite;
+    public InputActionReference reference;
 
     [Header("Sword Arc Settings")]
     [SerializeField] float orbitSpeed = 2f;   // radians per second
     [SerializeField] float orbitRadius;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void OnEnable() => reference.action.Enable();
+    private void OnDisable() => reference.action.Disable();
+
+    private float _orbitAngle;
+    private Rigidbody2D _playerRb;
+
+
+    private void Start()
     {
-        
+        _playerRb = PlayerUtils.GetPlayerController().GetRigidbody();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-     adjustSwordPos();
+        if (reference.action.IsPressed())
+            Orbit();
+        else
+            HoldAtForward();
     }
 
-    //get a vector from player to mous pos, normalize it, multiply by orbit radius
- 
- void adjustSwordPos()
+    private void Orbit()
     {
-       //get a vector in the direction I want the sword to be in away from the player
-        Vector2 mousePos = (Vector2) Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-        Vector2 offset = mousePos - (Vector2) player.transform.position;
+        _orbitAngle += orbitSpeed * Time.deltaTime;
+        SetPositionAtAngle(_orbitAngle);
 
-        //normalize it and then multiply by a set radius so we can have the sword at an arbitrary distance from player,
-        //and then make the position the player's + the offset
-        offset = offset.normalized * orbitRadius;
-        transform.position = (Vector2) player.transform.position + offset;
-        
-        //make the object's x axis the direction of the vector so it faces the player, and rotate the player
-        transform.right = player.transform.position - transform.position;
-        player.transform.right = transform.right;
-
-
+        // Spin the player sprite with the sword
+        playerSprite.transform.rotation = Quaternion.Euler(0f, 0f, _orbitAngle * Mathf.Rad2Deg);
     }
-    
-    
+
+    private void HoldAtForward()
+    {
+        float playerAngleRad = _playerRb.rotation * Mathf.Deg2Rad;
+        _orbitAngle = playerAngleRad;
+        SetPositionAtAngle(_orbitAngle);
+
+        // Restore sprite to match actual player rotation
+        playerSprite.transform.rotation = Quaternion.Euler(0f, 0f, _playerRb.rotation);
+    }
+
+    private void SetPositionAtAngle(float angleRad)
+    {
+        Vector2 offset = new Vector2(Mathf.Cos(angleRad), Mathf.Sin(angleRad)) * orbitRadius;
+        transform.position = playerSprite.transform.position + (Vector3)offset;
+
+        transform.rotation = Quaternion.Euler(0f, 0f, angleRad * Mathf.Rad2Deg + 180f); // +180 flips sprite to face outward
+    }
 }
