@@ -7,11 +7,12 @@ TagManager:
   - EnemyHitbox
   - Sword
   - Enemy
+  tags: []
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Background
   - Water
   - UI
   - 
@@ -43,6 +44,15 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 2023830087
+    locked: 0
+  - name: Sword
+    uniqueID: 1897599247
+    locked: 0
+  - name: Player
+    uniqueID: 3300685051
     locked: 0
   m_RenderingLayers:
   - Default

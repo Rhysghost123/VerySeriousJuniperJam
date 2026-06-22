@@ -72,7 +72,7 @@ using UnityEngine.InputSystem.Utilities;
 /// }
 /// </code>
 /// </example>
-public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
+public partial class PPlayerActions: IInputActionCollection2, IDisposable
 {
     /// <summary>
     /// Provides access to the underlying asset instance.
@@ -82,7 +82,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     /// <summary>
     /// Constructs a new instance.
     /// </summary>
-    public @PlayerInputActions()
+    public PPlayerActions()
     {
         asset = InputActionAsset.FromJson(@"{
     ""version"": 1,
@@ -168,9 +168,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
     }
 
-    ~@PlayerInputActions()
+    ~PPlayerActions()
     {
-        UnityEngine.Debug.Assert(!m_Player.enabled, "This will cause a leak and performance issues, PlayerInputActions.Player.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_Player.enabled, "This will cause a leak and performance issues, PlayerActions.Player.Disable() has not been called.");
     }
 
     /// <summary>
@@ -252,16 +252,16 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     /// </summary>
     public struct PlayerActions
     {
-        private @PlayerInputActions m_Wrapper;
+        private PPlayerActions m_Wrapper;
 
         /// <summary>
         /// Construct a new instance of the input action map wrapper class.
         /// </summary>
-        public PlayerActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public PlayerActions(PPlayerActions wrapper) { m_Wrapper = wrapper; }
         /// <summary>
         /// Provides access to the underlying input action "Player/Move".
         /// </summary>
-        public InputAction @Move => m_Wrapper.m_Player_Move;
+        public InputAction MMove => m_Wrapper.m_Player_Move;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -288,9 +288,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_PlayerActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_PlayerActionsCallbackInterfaces.Add(instance);
-            @Move.started += instance.OnMove;
-            @Move.performed += instance.OnMove;
-            @Move.canceled += instance.OnMove;
+            MMove.started += instance.OnMove;
+            MMove.performed += instance.OnMove;
+            MMove.canceled += instance.OnMove;
         }
 
         /// <summary>
@@ -302,9 +302,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="PlayerActions" />
         private void UnregisterCallbacks(IPlayerActions instance)
         {
-            @Move.started -= instance.OnMove;
-            @Move.performed -= instance.OnMove;
-            @Move.canceled -= instance.OnMove;
+            MMove.started -= instance.OnMove;
+            MMove.performed -= instance.OnMove;
+            MMove.canceled -= instance.OnMove;
         }
 
         /// <summary>
@@ -334,10 +334,13 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             AddCallbacks(instance);
         }
     }
+
+
+
     /// <summary>
     /// Provides a new <see cref="PlayerActions" /> instance referencing this action map.
     /// </summary>
-    public PlayerActions @Player => new PlayerActions(this);
+    public PlayerActions PPlayer => new PlayerActions(this);
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Player" which allows adding and removing callbacks.
     /// </summary>

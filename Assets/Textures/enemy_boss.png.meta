@@ -1,10 +1,16 @@
 fileFormatVersion: 2
-guid: bdde8c40625747447ad0d85bdc90212d
+guid: 18fbae8e11fe81542bfda845a79701eb
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2624918817160243788
-    second: jumpscare_0
+      213: -6879944732735409808
+    second: enemy_boss_0
+  - first:
+      213: 7671278505327142209
+    second: enemy_boss_1
+  - first:
+      213: 8799155446748077546
+    second: enemy_boss_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -24,7 +30,7 @@ TextureImporter:
     heightScale: 0.25
     normalMapFilter: 0
     flipGreenChannel: 0
-  isReadable: 0
+  isReadable: 1
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
@@ -72,7 +78,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 512
+    maxTextureSize: 32
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -100,13 +106,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: jumpscare_0
+      name: enemy_boss_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 398
-        height: 298
+        y: 1
+        width: 9
+        height: 9
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +121,52 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c4a231db1c59d6420800000000000000
-      internalID: 2624918817160243788
+      spriteID: 0717cf297b68580a0800000000000000
+      internalID: -6879944732735409808
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_boss_1
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 3
+        width: 24
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1452d1b082bd57a60800000000000000
+      internalID: 7671278505327142209
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: enemy_boss_2
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 1
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aeddcd64241ec1a70800000000000000
+      internalID: 8799155446748077546
       vertices: []
       indices: 
       edges: []
@@ -135,7 +185,9 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      jumpscare_0: 2624918817160243788
+      enemy_boss_0: -6879944732735409808
+      enemy_boss_1: 7671278505327142209
+      enemy_boss_2: 8799155446748077546
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

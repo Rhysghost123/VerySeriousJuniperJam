@@ -1,104 +1,99 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-
-[RequireComponent(typeof(CharacterController))]
+[RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
 {
-    public enum RotationBehavior
-    {
-        FaceMovementDirection,
-        FaceMouseCursor
-    }
-
-    [Header("Movement Settings")]
     [SerializeField] private float moveSpeed = 7f;
     [SerializeField] private float rotationSpeed = 15f;
-    [SerializeField] private RotationBehavior rotationType = RotationBehavior.FaceMovementDirection;
-
-    [Header("Ground & Gravity Settings")]
-    [SerializeField] private LayerMask groundLayer;
-    [SerializeField] private float gravity = -9.81f;
+    [SerializeField] private float minLookDistance = 0.1f; // ignore cursor too close to player
 
     [Header("Input")]
     [SerializeField] private InputActionReference moveAction;
 
-    private CharacterController characterController;
-    private Camera mainCamera;
+    [Header("GAMBLING")]
+    [SerializeField] private float GoodLuckMultiplier = 1.0f;
 
-    private Vector3 movementInput;
-    private Vector3 velocity;
+    [Header("Health")]
+    [SerializeField] private int MaxHealth = 100;
+    [SerializeField] private float RegenSpeed = 5.0f; // per second
 
-    private void Start()
+    private Rigidbody2D rb;
+    private Vector2 movementInput;
+    private float targetAngle;
+    private bool hasValidLookDir;
+
+    private bool mouseLookEnabled { get; set; } = true;
+
+    public void SetMoveSpeed(float speed)
     {
-        characterController = GetComponent<CharacterController>();
-        mainCamera = Camera.main;
+        moveSpeed = speed;
+    }
+    public float GetMoveSpeed()
+    {
+        return moveSpeed;
+    }
+    public void SetGoodLuckMultiplier(float mul)
+    {
+        GoodLuckMultiplier = mul;
+    }
+    public float GetGoodLuckMultiplier()
+    {
+        return GoodLuckMultiplier;
     }
 
-    private void OnEnable()
+    public void SetMaxHealth(int val)
     {
-        moveAction.action.Enable();
+        MaxHealth = val;
+    }
+    public int GetMaxHealth()
+    {
+        return MaxHealth;
+    }
+    public void SetRegenSpeed(float val)
+    {
+        RegenSpeed = val;
+    }
+    public float GetRegenSpeed()
+    {
+        return RegenSpeed;
     }
 
-    private void OnDisable()
+    private void Awake()
     {
-        moveAction.action.Disable();
+        rb = GetComponent<Rigidbody2D>();
+        rb.gravityScale = 0;
+        rb.freezeRotation = true; // <-- key fix: physics must never rotate this body
     }
+
+    private void OnEnable() => moveAction.action.Enable();
+    private void OnDisable() => moveAction.action.Disable();
 
     private void Update()
     {
-        GatherInput();
-        ProcessMovement();
-        ProcessRotation();
-    }
+        movementInput = moveAction.action.ReadValue<Vector2>();
 
-    private void GatherInput()
-    {
-        Vector2 input = moveAction.action.ReadValue<Vector2>();
+        Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        mouseWorld.z = 0f;
 
-        movementInput = new Vector3(
-            input.x,
-            input.y,
-            0f
-        );
+        Vector2 lookDir = mouseWorld - transform.position;
 
-        if (movementInput.sqrMagnitude > 1f)
-            movementInput.Normalize();
-    }
-
-
-    private void ProcessMovement()
-    {
-        characterController.Move(
-            movementInput * moveSpeed * Time.deltaTime
-        );
-    }
-
-    private void ProcessRotation()
-    {
-        Vector2 mousePos = Mouse.current.position.ReadValue();
-
-        Ray ray = mainCamera.ScreenPointToRay(mousePos);
-
-        Plane groundPlane = new Plane(Vector3.up, transform.position);
-
-        if (groundPlane.Raycast(ray, out float distance))
+        // Use a real-world distance threshold, not a tiny sqrMagnitude epsilon
+        if (mouseLookEnabled == true && lookDir.sqrMagnitude > minLookDistance * minLookDistance)
         {
-            Vector3 hitPoint = ray.GetPoint(distance);
+            targetAngle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg;
+            hasValidLookDir = true;
+        }
+        // else: keep last valid targetAngle, don't rotate toward noise
+    }
 
-            Vector3 lookDir = hitPoint - transform.position;
-            lookDir.y = 0f;
+    private void FixedUpdate()
+    {
+        rb.linearVelocity = movementInput.normalized * moveSpeed;
 
-            if (lookDir.sqrMagnitude > 0.001f)
-            {
-                Quaternion targetRotation =
-                    Quaternion.LookRotation(lookDir);
-
-                transform.rotation = Quaternion.Slerp(
-                    transform.rotation,
-                    targetRotation,
-                    rotationSpeed * Time.deltaTime
-                );
-            }
+        if (hasValidLookDir)
+        {
+            float newAngle = Mathf.LerpAngle(rb.rotation, targetAngle, rotationSpeed * Time.fixedDeltaTime);
+            rb.MoveRotation(newAngle);
         }
     }
 }
