@@ -16,13 +16,13 @@ public class SwordBehavior : MonoBehaviour
     private void OnEnable() => reference.action.Enable();
     private void OnDisable() => reference.action.Disable();
 
-    private float _orbitAngle;
-    private Rigidbody2D _playerRb;
+    private float orbitAngle;
+    private Rigidbody2D playerRb;
 
 
     private void Start()
     {
-        _playerRb = PlayerUtils.GetPlayerController().GetRigidbody();
+        playerRb = PlayerUtils.GetPlayerController().GetRigidbody();
     }
 
     private void Update()
@@ -35,21 +35,21 @@ public class SwordBehavior : MonoBehaviour
 
     private void Orbit()
     {
-        _orbitAngle += orbitSpeed * Time.deltaTime;
-        SetPositionAtAngle(_orbitAngle);
+        orbitAngle += orbitSpeed * Time.deltaTime;
+        SetPositionAtAngle(orbitAngle);
 
         // Spin the player sprite with the sword
-        playerSprite.transform.rotation = Quaternion.Euler(0f, 0f, _orbitAngle * Mathf.Rad2Deg);
+        playerSprite.transform.rotation = Quaternion.Euler(0f, 0f, orbitAngle * Mathf.Rad2Deg);
     }
 
     private void HoldAtForward()
     {
-        float playerAngleRad = _playerRb.rotation * Mathf.Deg2Rad;
-        _orbitAngle = playerAngleRad;
-        SetPositionAtAngle(_orbitAngle);
+        float playerAngleRad = playerRb.rotation * Mathf.Deg2Rad;
+        orbitAngle = playerAngleRad;
+        SetPositionAtAngle(orbitAngle);
 
         // Restore sprite to match actual player rotation
-        playerSprite.transform.rotation = Quaternion.Euler(0f, 0f, _playerRb.rotation);
+        playerSprite.transform.rotation = Quaternion.Euler(0f, 0f, playerRb.rotation);
     }
 
     private void SetPositionAtAngle(float angleRad)
