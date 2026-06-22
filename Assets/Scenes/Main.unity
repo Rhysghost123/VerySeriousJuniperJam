@@ -206,11 +206,11 @@ Transform:
   m_GameObject: {fileID: 911154990}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 1, w: 0}
-  m_LocalPosition: {x: 4.1600003, y: -1.03, z: 0.03}
+  m_LocalPosition: {x: 4.09, y: 0.01999998, z: 0.03}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1796727077}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
 --- !u!114 &911154993
 MonoBehaviour:
@@ -225,7 +225,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SwordBehavior
   meleeWeapon: {fileID: 11400000, guid: 30ad33a70b420764b80aa7281a70e448, type: 2}
-  player: {fileID: 1796727073}
+  playerSprite: {fileID: 1796727073}
   reference: {fileID: 5699891486940395155, guid: 93fce591322299f42bcc3f7c1a167d3e, type: 3}
   orbitSpeed: 2
   orbitRadius: 2
@@ -761,6 +761,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2029176100}
+  - {fileID: 911154992}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &1796727078
@@ -1025,6 +1026,5 @@ SceneRoots:
   - {fileID: 1704166486}
   - {fileID: 1864942870}
   - {fileID: 1427495574}
-  - {fileID: 911154992}
   - {fileID: 1796727077}
   - {fileID: 1538871434}
