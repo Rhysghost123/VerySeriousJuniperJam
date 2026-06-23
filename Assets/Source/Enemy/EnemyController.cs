@@ -172,7 +172,7 @@ public class EnemyController : MonoBehaviour
     private void PerformAttack()
     {
         Debug.Log($"{name} hits player for {strength} damage");
-        // player.GetComponent<Health>()?.TakeDamage(strength);
+        player.GetComponent<Health>()?.TakeDamage(strength);
     }
 
     public void Die()
