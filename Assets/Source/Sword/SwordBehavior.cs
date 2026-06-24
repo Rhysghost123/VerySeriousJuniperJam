@@ -10,44 +10,36 @@ public class SwordBehavior : MonoBehaviour
     public GameObject player;
 
     [Header("Sword Arc Settings")]
-    [SerializeField] float orbitSpeed = 2f;   // radians per second
+    [SerializeField] float orbitSpeed = 2f;
     [SerializeField] float orbitRadius;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    // Reinstated missing fields
+    private Rigidbody2D playerRb;
+    private SpriteRenderer playerSprite;
+    private float orbitAngle;
+
     void Start()
     {
-        
+        playerRb = player.GetComponent<Rigidbody2D>();
+        playerSprite = player.GetComponent<SpriteRenderer>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-     adjustSwordPos();
+        adjustSwordPos();
     }
 
-    //get a vector from player to mous pos, normalize it, multiply by orbit radius
- 
- void adjustSwordPos()
+    void adjustSwordPos()
     {
-       //get a vector in the direction I want the sword to be in away from the player
-        Vector2 mousePos = (Vector2) Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-        Vector2 offset = mousePos - (Vector2) player.transform.position;
+        Vector2 mousePos = (Vector2)Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        Vector2 offset = mousePos - (Vector2)player.transform.position;
 
-        //normalize it and then multiply by a set radius so we can have the sword at an arbitrary distance from player,
-        //and then make the position the player's + the offset
         offset = offset.normalized * orbitRadius;
-        transform.position = (Vector2) player.transform.position + offset;
-        
-        //make the object's x axis the direction of the vector so it faces the player, and rotate the player
+        transform.position = (Vector2)player.transform.position + offset;
+
         transform.right = player.transform.position - transform.position;
         player.transform.right = transform.right;
 
-
-<<<<<<< Updated upstream
-    }
-    
-    
-=======
         // Spin the player sprite with the sword
         playerSprite.transform.rotation = Quaternion.Euler(0f, 0f, orbitAngle * Mathf.Rad2Deg);
     }
@@ -65,33 +57,28 @@ public class SwordBehavior : MonoBehaviour
     private void SetPositionAtAngle(float angleRad)
     {
         Vector2 offset = new Vector2(Mathf.Cos(angleRad), Mathf.Sin(angleRad)) * orbitRadius;
-        transform.position = playerSprite.transform.position + (Vector3) offset;
+        transform.position = playerSprite.transform.position + (Vector3)offset;
 
-        transform.rotation = Quaternion.Euler(0f, 0f, angleRad * Mathf.Rad2Deg + 180f); // +180 flips sprite to face outward
+        transform.rotation = Quaternion.Euler(0f, 0f, angleRad * Mathf.Rad2Deg + 180f);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         print("Sword hit something.");
-        if (other.gameObject.CompareTag("Enemy")) //if the collision is with an enemy
+        if (other.gameObject.CompareTag("Enemy"))
         {
             EnemyComponent enemyHealth = other.gameObject.GetComponent<EnemyComponent>();
 
-            if (enemyHealth != null) //and it has a health component
+            if (enemyHealth != null)
             {
                 enemyHealth.TakeDamage(
-                meleeWeapon.damage,
-                meleeWeapon.weight,
-                other.gameObject.transform.position - playerRb.gameObject.transform.position
-                ); //damage it using the player's strength and the sword's damage ADD PLAYER STRENGTH TO THIS MULTIPLIER
+                    meleeWeapon.damage,
+                    meleeWeapon.weight,
+                    other.gameObject.transform.position - playerRb.gameObject.transform.position
+                );
 
                 print("Enemy hit for " + meleeWeapon.damage + " damage.");
-
             }
-            
         }
     }
-
-   
->>>>>>> Stashed changes
 }
