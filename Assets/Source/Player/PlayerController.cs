@@ -1,6 +1,8 @@
 using Unity.Burst.Intrinsics;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
+
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
 {
@@ -105,5 +107,15 @@ public class PlayerController : MonoBehaviour
             float newAngle = Mathf.LerpAngle(rb.rotation, targetAngle, rotationSpeed * Time.fixedDeltaTime);
             rb.MoveRotation(newAngle);
         }
+
+        if (CurrentHealth <= 0)
+        {
+            playerDeath();
+        }
+    }
+
+    private void playerDeath()
+    {
+        SceneManager.LoadScene("GameOver");
     }
 }

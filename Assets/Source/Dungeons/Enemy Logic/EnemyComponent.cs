@@ -114,6 +114,7 @@ public class EnemyComponent : MonoBehaviour
 
      private void Die()
     {
+        EnemySpawner.activeEnemies --;
         Destroy(gameObject);
     }
 
