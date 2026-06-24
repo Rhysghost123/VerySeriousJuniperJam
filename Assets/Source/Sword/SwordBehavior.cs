@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.CompilerServices;
 using System.Text;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -42,7 +43,55 @@ public class SwordBehavior : MonoBehaviour
         player.transform.right = transform.right;
 
 
+<<<<<<< Updated upstream
     }
     
     
+=======
+        // Spin the player sprite with the sword
+        playerSprite.transform.rotation = Quaternion.Euler(0f, 0f, orbitAngle * Mathf.Rad2Deg);
+    }
+
+    private void HoldAtForward()
+    {
+        float playerAngleRad = playerRb.rotation * Mathf.Deg2Rad;
+        orbitAngle = playerAngleRad;
+        SetPositionAtAngle(orbitAngle);
+
+        // Restore sprite to match actual player rotation
+        playerSprite.transform.rotation = Quaternion.Euler(0f, 0f, playerRb.rotation);
+    }
+
+    private void SetPositionAtAngle(float angleRad)
+    {
+        Vector2 offset = new Vector2(Mathf.Cos(angleRad), Mathf.Sin(angleRad)) * orbitRadius;
+        transform.position = playerSprite.transform.position + (Vector3) offset;
+
+        transform.rotation = Quaternion.Euler(0f, 0f, angleRad * Mathf.Rad2Deg + 180f); // +180 flips sprite to face outward
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        print("Sword hit something.");
+        if (other.gameObject.CompareTag("Enemy")) //if the collision is with an enemy
+        {
+            EnemyComponent enemyHealth = other.gameObject.GetComponent<EnemyComponent>();
+
+            if (enemyHealth != null) //and it has a health component
+            {
+                enemyHealth.TakeDamage(
+                meleeWeapon.damage,
+                meleeWeapon.weight,
+                other.gameObject.transform.position - playerRb.gameObject.transform.position
+                ); //damage it using the player's strength and the sword's damage ADD PLAYER STRENGTH TO THIS MULTIPLIER
+
+                print("Enemy hit for " + meleeWeapon.damage + " damage.");
+
+            }
+            
+        }
+    }
+
+   
+>>>>>>> Stashed changes
 }

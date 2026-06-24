@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1695e6a7594ca4641a6ddfa387608803, type: 3}
   m_Name: BasicSword
   m_EditorClassIdentifier: Assembly-CSharp::MeleeWeapon
-  strength: 2
+  damage: 7
   weight: 1

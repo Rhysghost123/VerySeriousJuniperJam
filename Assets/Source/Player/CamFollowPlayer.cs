@@ -16,6 +16,6 @@ public class CamFollowPlayer : MonoBehaviour
         CameraPos = Player.transform.position; // better than parenting the 2, then the rotation gets fucked
         CameraPos.z -= 10;
 
-        Camera.transform.position = CameraPos;
+        //Camera.transform.position = CameraPos;
     }
 }

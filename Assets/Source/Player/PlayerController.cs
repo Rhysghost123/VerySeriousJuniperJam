@@ -14,7 +14,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float GoodLuckMultiplier = 1.0f;
 
     [Header("Health")]
-    [SerializeField] private int MaxHealth = 100;
+    [SerializeField] private float MaxHealth = 100;
+    [SerializeField] private float CurrentHealth = 100;
     [SerializeField] private float RegenSpeed = 5.0f; // per second
 
     private Rigidbody2D rb;
@@ -41,13 +42,21 @@ public class PlayerController : MonoBehaviour
         return GoodLuckMultiplier;
     }
 
-    public void SetMaxHealth(int val)
+    public void SetMaxHealth(float val)
     {
         MaxHealth = val;
     }
-    public int GetMaxHealth()
+    public float GetMaxHealth()
     {
         return MaxHealth;
+    }
+    public void SetCurrentHealth(float val)
+    {
+        CurrentHealth = val;
+    }
+    public float GetCurrentHealth()
+    {
+        return CurrentHealth;
     }
     public void SetRegenSpeed(float val)
     {
