@@ -23,6 +23,9 @@ public class PlayerController : MonoBehaviour
 
     [Header("Legs lol")]
     [SerializeField] private GameObject legs;
+    [SerializeField] private GameObject legsSecondary;
+    [SerializeField] private GameObject legsTertiary;
+    private Animator anim;
 
     private Rigidbody2D rb;
     private Vector2 movementInput;
@@ -78,6 +81,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         rb.gravityScale = 0;
         rb.freezeRotation = true; // <-- key fix: physics must never rotate this body
+        anim = legs.GetComponent<Animator>();
     }
 
     private void OnEnable() => moveAction.action.Enable();
@@ -99,12 +103,27 @@ public class PlayerController : MonoBehaviour
             hasValidLookDir = true;
         }
         // else: keep last valid targetAngle, don't rotate toward noise
+
+        if(movementInput == Vector2.zero)
+        {
+           legsSecondary.SetActive(true);
+           legsTertiary.SetActive(true);
+           anim.SetBool("IsMoving", false);
+        }
+        else
+        {
+            legsSecondary.SetActive(false);
+            legsTertiary.SetActive(false);
+            anim.SetBool("IsMoving", true);
+        }
     }
 
     private void FixedUpdate()
     {
         rb.linearVelocity = movementInput.normalized * moveSpeed;
         legs.transform.position = gameObject.transform.position;
+        legsSecondary.transform.position = gameObject.transform.position;
+        legsTertiary.transform.position = gameObject.transform.position;
         
         //aligns legs in the same direction as the movementInput vector
         AlignLegsWithMovement(movementInput);
@@ -137,5 +156,7 @@ public class PlayerController : MonoBehaviour
     // Apply the rotation to the legs bone/object along the Z axis
     Quaternion targetRotation = Quaternion.Euler(0f, 0f, -angle);
     legs.transform.rotation = Quaternion.Slerp(legs.transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+    legsSecondary.transform.rotation = Quaternion.Slerp(legsSecondary.transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+    legsTertiary.transform.rotation = Quaternion.Slerp(legsTertiary.transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
     }
 }

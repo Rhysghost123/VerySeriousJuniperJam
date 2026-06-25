@@ -19,7 +19,7 @@ public class EnemyComponent : MonoBehaviour
     private float currentHealth;
     private Rigidbody2D rb;
 
-    [Header("Attack Details")]
+    [Header("MeleeAttack Details")]
     [SerializeField] private float attackDamage;
     [SerializeField] private float attackRange;
     [SerializeField] private float attackCooldown;
@@ -138,4 +138,6 @@ public class EnemyComponent : MonoBehaviour
     pc.SetCurrentHealth(pc.GetCurrentHealth() - attackDamage);
     Debug.Log($"Enemy attacked player for {attackDamage} damage.");
 }
+
+
 }
