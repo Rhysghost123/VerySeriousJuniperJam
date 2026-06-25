@@ -11594,6 +11594,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 6598915292455493576, guid: 721b760a1b40a6047a78cc8493626db5, type: 3}
+      propertyPath: orbitRadius
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
