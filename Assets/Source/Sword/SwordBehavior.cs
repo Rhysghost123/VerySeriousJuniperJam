@@ -40,7 +40,7 @@ public class SwordBehavior : MonoBehaviour
     {
         if (Mouse.current == null) return;
 
-        Vector2 mousePos = (Vector2)mainCam.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        Vector2 mousePos = (Vector2) mainCam.ScreenToWorldPoint(Mouse.current.position.ReadValue());
         Vector2 offset = mousePos - (Vector2)player.transform.position;
         float targetAngle = Mathf.Atan2(offset.y, offset.x) * Mathf.Rad2Deg;
 
@@ -60,7 +60,7 @@ public class SwordBehavior : MonoBehaviour
         // Rotate sword and player sprite to match
         Quaternion rot = Quaternion.Euler(0f, 0f, currentAngle);
         transform.rotation = rot;
-        playerSprite.transform.rotation = rot;
+        playerSprite.transform.rotation = Quaternion.Euler(0f, 0f, currentAngle - 90f);
     }
 
     private void OnTriggerEnter2D(Collider2D other)

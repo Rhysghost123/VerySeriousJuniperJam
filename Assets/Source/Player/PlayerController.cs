@@ -21,6 +21,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float CurrentHealth = 100;
     [SerializeField] private float RegenSpeed = 5.0f; // per second
 
+    [Header("Legs lol")]
+    [SerializeField] private GameObject legs;
+
     private Rigidbody2D rb;
     private Vector2 movementInput;
     private float targetAngle;
@@ -92,7 +95,7 @@ public class PlayerController : MonoBehaviour
         // Use a real-world distance threshold, not a tiny sqrMagnitude epsilon
         if (mouseLookEnabled == true && lookDir.sqrMagnitude > minLookDistance * minLookDistance)
         {
-            targetAngle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg;
+            targetAngle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg - 90f;
             hasValidLookDir = true;
         }
         // else: keep last valid targetAngle, don't rotate toward noise
@@ -101,6 +104,11 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         rb.linearVelocity = movementInput.normalized * moveSpeed;
+        legs.transform.position = gameObject.transform.position;
+        
+        //aligns legs in the same direction as the movementInput vector
+        AlignLegsWithMovement(movementInput);
+
 
         if (hasValidLookDir)
         {
@@ -117,5 +125,17 @@ public class PlayerController : MonoBehaviour
     private void playerDeath()
     {
         SceneManager.LoadScene("GameOver");
+    }
+
+    private void AlignLegsWithMovement(Vector2 movementInput)
+    {
+    if (movementInput == Vector2.zero) return; // No movement, keep legs as-is
+
+    // Calculate the angle from the movement input along the Z axis
+    float angle = Mathf.Atan2(movementInput.x, movementInput.y) * Mathf.Rad2Deg;
+
+    // Apply the rotation to the legs bone/object along the Z axis
+    Quaternion targetRotation = Quaternion.Euler(0f, 0f, -angle);
+    legs.transform.rotation = Quaternion.Slerp(legs.transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
     }
 }
