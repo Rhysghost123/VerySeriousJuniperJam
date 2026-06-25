@@ -7,9 +7,11 @@ public class GameManager : MonoBehaviour
 {
     public bool isGameActive;
     public int currentRoom = 1;
+    public int roomsCleared;
 
     public static GameManager instance;
     public EnemySpawner[] enemySpawners;
+    private ExitDoor exitDoor;
 
     // phase 0: Nothing spawned yet, slot machine waiting to be spun
     // phase 1: Enemies are spawned, player is fighting
@@ -17,17 +19,25 @@ public class GameManager : MonoBehaviour
     public int phase = 0;
 
     void Start()
+{
+    if (instance == null)
     {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        instance = this;
+        DontDestroyOnLoad(gameObject);
     }
+    else
+    {
+        Destroy(gameObject);
+        return; // Early return — no point continuing on the duplicate
+    }
+
+    GameObject exitObj = GameObject.FindGameObjectWithTag("Exit");
+    if (exitObj != null)
+        exitDoor = exitObj.GetComponent<ExitDoor>();
+
+    if (exitDoor != null)
+        exitDoor.unLightDoor();
+}
 
     void Update()
     {
@@ -65,6 +75,17 @@ public class GameManager : MonoBehaviour
     void OnAllEnemiesDefeated()
     {
         Debug.Log("All enemies defeated! Phase 2: Chest appears.");
+        UnregisterSpawners();
+
+
+        GameObject exitObj = GameObject.FindGameObjectWithTag("Exit");
+    if (exitObj != null)
+        exitDoor = exitObj.GetComponent<ExitDoor>();
+
+    if (exitDoor != null)
+        exitDoor.unLightDoor();
+
+        exitDoor.lightDoor();
         // TODO: Spawn chest / trigger reward logic here
     }
 
@@ -90,4 +111,10 @@ public class GameManager : MonoBehaviour
         var list = new List<EnemySpawner>(enemySpawners) { spawner };
         enemySpawners = list.ToArray();
     }
+    public void UnregisterSpawners()
+    {
+        enemySpawners = new EnemySpawner[0];
+    }
+
+    
 }

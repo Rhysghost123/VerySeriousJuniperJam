@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 public class SlotMachine : MonoBehaviour
 {
     
-    public GameObject player;
+    private GameObject player;
     public float interactRng;
     public InputActionAsset inputActions;
 
@@ -26,6 +26,7 @@ public class SlotMachine : MonoBehaviour
 
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
         
         if (player != null)
             playerTransform = player.GetComponent<Transform>();
