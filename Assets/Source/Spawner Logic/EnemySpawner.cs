@@ -6,7 +6,7 @@ public class EnemySpawner : MonoBehaviour
 {
     [Header("Spawn Settings")]
     public GameObject[] enemyPrefabs;   // Assign enemy prefabs in Inspector
-    public int maxWaves = 3;
+    public int maxWaves = 1;
     public float timeBetweenWaves = 3f;
     public int enemiesPerWave = 2;
 

@@ -30,6 +30,14 @@ public class ExitDoor : MonoBehaviour
 
     }
 
+    void Awake()
+    {
+        interactAction = InputSystem.actions.FindAction("Interact");
+          player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+            playerTransform = player.GetComponent<Transform>();
+    }
+
     // Update is called once per frame
     void Update()
     {

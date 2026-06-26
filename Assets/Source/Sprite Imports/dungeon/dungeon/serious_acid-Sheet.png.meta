@@ -1,10 +1,22 @@
 fileFormatVersion: 2
-guid: 27a753f7ca20ce54dbee757e55b7c673
+guid: 55e644c8db660d64286947e4d7f23d44
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6411973961760656320
-    second: Grapeannon_Import_0
+      213: -911482426990919267
+    second: serious_acid-Sheet_0
+  - first:
+      213: 1462157602080614268
+    second: serious_acid-Sheet_1
+  - first:
+      213: -1243797248138063151
+    second: serious_acid-Sheet_2
+  - first:
+      213: 8937247848020640887
+    second: serious_acid-Sheet_3
+  - first:
+      213: 1989191764500982504
+    second: serious_acid-Sheet_4
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -51,7 +63,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 20
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -113,13 +125,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Grapeannon_Import_0
+      name: serious_acid-Sheet_0
       rect:
         serializedVersion: 2
-        x: 4
-        y: 1
-        width: 59
-        height: 67
+        x: 0
+        y: 0
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +140,96 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 044b33467a71407a0800000000000000
-      internalID: -6411973961760656320
+      spriteID: d910238df83c953f0800000000000000
+      internalID: -911482426990919267
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: serious_acid-Sheet_1
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 0
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c77e6ad9790aa4410800000000000000
+      internalID: 1462157602080614268
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: serious_acid-Sheet_2
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 0
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d25f142ef42dbee0800000000000000
+      internalID: -1243797248138063151
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: serious_acid-Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 47
+        y: 0
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 77405e2f09b770c70800000000000000
+      internalID: 8937247848020640887
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: serious_acid-Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 63
+        y: 0
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8eaa631ee570b9b10800000000000000
+      internalID: 1989191764500982504
       vertices: []
       indices: 
       edges: []
@@ -148,7 +248,11 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Grapeannon_Import_0: -6411973961760656320
+      serious_acid-Sheet_0: -911482426990919267
+      serious_acid-Sheet_1: 1462157602080614268
+      serious_acid-Sheet_2: -1243797248138063151
+      serious_acid-Sheet_3: 8937247848020640887
+      serious_acid-Sheet_4: 1989191764500982504
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

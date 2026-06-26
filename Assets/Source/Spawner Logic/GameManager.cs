@@ -91,7 +91,7 @@ public class GameManager : MonoBehaviour
 
      public void startGame()
     {
-        SceneManager.LoadScene("Main");
+        SceneManager.LoadScene("Room0");
         isGameActive = true;
     }
 

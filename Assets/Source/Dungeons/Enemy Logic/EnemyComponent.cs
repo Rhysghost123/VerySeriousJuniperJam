@@ -4,10 +4,10 @@ using System.Collections;
 public class EnemyComponent : MonoBehaviour
 {
     [Header("Follow")]
-    [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] public float moveSpeed = 5f;
     GameObject playerObj;
 
-    private Transform player;
+    public Transform player;
 
      [Header("Health")]
     [SerializeField] private float maxHealth = 100f;
@@ -19,11 +19,11 @@ public class EnemyComponent : MonoBehaviour
     private float currentHealth;
     private Rigidbody2D rb;
 
-    [Header("MeleeAttack Details")]
-    [SerializeField] private float attackDamage;
-    [SerializeField] private float attackRange;
-    [SerializeField] private float attackCooldown;
-    private float lastAttackTime = -Mathf.Infinity;
+    [Header("General Attack Details")]
+    [SerializeField] public float attackDamage;
+    [SerializeField] public float attackRange;
+    [SerializeField] public float attackCooldown;
+    public float lastAttackTime = -Mathf.Infinity;
 
     //find the player object
     private void Start()
@@ -52,7 +52,7 @@ public class EnemyComponent : MonoBehaviour
         //continue logic to approach the player at a range, and fire at them
     }
 
-    private void followPlayer()
+    protected virtual void followPlayer()
 {
     if (player == null) return;
 
@@ -126,7 +126,7 @@ public class EnemyComponent : MonoBehaviour
         rb.linearVelocity = Vector2.zero;
     }
 
-    private void AttackPlayer()
+    protected virtual void AttackPlayer()
 {
     if (Time.time < lastAttackTime + attackCooldown) return;
 
